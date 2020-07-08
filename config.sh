@@ -9,7 +9,7 @@ rs.initiate(
    {
 EOT
 
-echo "_id: \"$CONFIG_SERVER_NAME\"," >> /init-configserver.js
+echo "_id: \"$CONFIG_REPLICA_SET\"," >> /init-configserver.js
 
 cat <<EOT >> /init-configserver.js
       configsvr: true,

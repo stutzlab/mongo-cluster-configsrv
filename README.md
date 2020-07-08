@@ -8,6 +8,6 @@ This is meant to be used along with [http://github.com/stutzlab/mongo-cluster-ro
 
 ## ENVs
 
-* CONFIG_REPLICA_SET - name of the replica set used. defaults to 'replica-set1'
+* CONFIG_REPLICA_SET - name of the replica set to be used in configsrv replication. defaults to 'configsrv'
 * CONFIG_SERVER_NODES - command separated list of config servers. ex.: configsrv1,configsrv2,configsrv3. required
 
