@@ -4,6 +4,7 @@ services:
 
   configsrv1:
     build: .
+    image: stutzlab/mongo-cluster-configsrv
     environment:
       - CONFIG_REPLICA_SET=replica-set1
       - CONFIG_SERVER_NODES=configsrv1,configsrv2,configsrv3
