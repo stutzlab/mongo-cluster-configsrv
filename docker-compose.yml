@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+
+  configsrv1:
+    build: .
+    environment:
+      - CONFIG_REPLICA_SET=replica-set1
+      - CONFIG_SERVER_NODES=configsrv1,configsrv2,configsrv3
+    ports:
+      - 27311:27017
+    volumes:
+      - configsrv1-data:/data
+
+      
