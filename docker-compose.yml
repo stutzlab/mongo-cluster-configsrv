@@ -6,8 +6,23 @@ services:
     build: .
     image: stutzlab/mongo-cluster-configsrv
     environment:
-      - CONFIG_REPLICA_SET=replica-set1
-      - CONFIG_SERVER_NODES=configsrv1,configsrv2,configsrv3
-    ports:
-      - 27311:27017
+      - CONFIG_REPLICA_SET=configsrv-one
+      - INIT_CONFIG_NODES=configsrv1,configsrv2,configsrv3
 
+  configsrv2:
+    build: .
+    image: stutzlab/mongo-cluster-configsrv
+    environment:
+      - CONFIG_REPLICA_SET=configsrv-one
+
+  configsrv3:
+    build: .
+    image: stutzlab/mongo-cluster-configsrv
+    environment:
+      - CONFIG_REPLICA_SET=configsrv-one
+
+  configsrv4:
+    build: .
+    image: stutzlab/mongo-cluster-configsrv
+    environment:
+      - CONFIG_REPLICA_SET=configsrv-one

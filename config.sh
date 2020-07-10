@@ -1,5 +1,34 @@
 #!/bin/bash
 
+echo "Waiting for mongo server to be available at 27017..."
+while ! nc -z 127.0.0.1 27017; do sleep 0.5; done
+sleep 1
+
+MAX_RETRIES=9999
+if [ "$INIT_CONFIG_NODES" != "" ]; then
+   MAX_RETRIES=5
+fi
+
+echo "Verifying if this config node is already part of a config replicaset..."
+C=0
+while (( "$C" < "$MAX_RETRIES" )); do
+   RS_FIND=$(mongo --eval "db.isMaster()" | grep $CONFIG_REPLICA_SET)
+   if [ "$?" == "0" ]; then
+      mongo --eval "db.isMaster()"
+      echo ">>> THIS NODE IS PART OF A CONFIG REPLICASET"
+      exit 0
+   fi
+   C=($C+1)
+   echo "."
+   sleep 1
+done
+
+if [ "$INIT_CONFIG_NODES" == "" ]; then
+  echo ">>> THIS NODE IS NOT PART OF A CONFIG. ADD IT IN ORDER TO BE ACTIVE"
+  echo "Tip: On master node, execute rs.add( { host: \"[host]\", priority: 0, votes: 0 } )"
+  exit 0
+fi
+
 echo "Generating configsrv config"
 echo ""
 
@@ -17,7 +46,7 @@ cat <<EOT >> /init-configserver.js
       members: [
 EOT
 
-IFS=',' read -r -a NODES <<< "$CONFIG_SERVER_NODES"
+IFS=',' read -r -a NODES <<< "$INIT_CONFIG_NODES"
 S=""
 c=0
 for N in "${NODES[@]}"; do
@@ -35,11 +64,7 @@ EOT
 echo "/init-configserver.js"
 cat /init-configserver.js
 
-echo "Waiting for local server to be available at 27017..."
-while ! nc -z 127.0.0.1 27017; do sleep 0.5; echo "."; done
-sleep 3
-
-echo ">>> CONFIGURING CLUSTER CONFIG SERVER..."
+echo "CONFIGURING CLUSTER CONFIG SERVER..."
 mongo < /init-configserver.js
-echo "CONFIGURATION OK"
+echo ">>> CONFIG SERVER INITIALIZED SUCCESSFULLY"
 
