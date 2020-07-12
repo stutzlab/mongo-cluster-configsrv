@@ -12,7 +12,7 @@ fi
 echo "Verifying if this config node is already part of a config replicaset..."
 C=0
 while (( "$C" < "$MAX_RETRIES" )); do
-   RS_FIND=$(mongo --eval "db.isMaster()" | grep $CONFIG_REPLICA_SET)
+   mongo --eval "db.isMaster()" | grep $CONFIG_REPLICA_SET
    if [ "$?" == "0" ]; then
       mongo --eval "db.isMaster()"
       echo ">>> THIS NODE IS PART OF A CONFIG REPLICASET"
