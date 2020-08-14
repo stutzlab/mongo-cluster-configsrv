@@ -14,9 +14,9 @@ C=0
 while [ (( "$C" < "$MAX_RETRIES" )); do
    mongo --eval "db.isMaster()" | grep $CONFIG_REPLICA_SET
    if [ "$?" == "0" ]; then
-      mongo --eval "db.isMaster()"
-      echo ">>> THIS NODE IS PART OF A CONFIG REPLICASET"
-      exit 0
+     mongo --eval "db.isMaster()"
+     echo ">>> THIS NODE IS PART OF A CONFIG REPLICASET"
+     exit 0
    fi
    echo "."
    if [ "$MAX_RETRIES" != "9999" ]; then
