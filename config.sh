@@ -18,10 +18,9 @@ while [ (( "$C" < "$MAX_RETRIES" )); do
       echo ">>> THIS NODE IS PART OF A CONFIG REPLICASET"
       exit 0
    fi
-   C=($C+1)
    echo "."
-   if [ "$MAX_RETRIES" == "9999" ]; then
-      break
+   if [ "$MAX_RETRIES" != "9999" ]; then
+     C=($C+1)
    fi
    sleep 1
 done
