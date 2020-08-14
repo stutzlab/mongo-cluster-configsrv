@@ -11,7 +11,7 @@ fi
 
 echo "Verifying if this config node is already part of a config replicaset..."
 C=0
-while (( "$C" < "$MAX_RETRIES" )); do
+while [ (( "$C" < "$MAX_RETRIES" )); do
    mongo --eval "db.isMaster()" | grep $CONFIG_REPLICA_SET
    if [ "$?" == "0" ]; then
       mongo --eval "db.isMaster()"
@@ -20,6 +20,9 @@ while (( "$C" < "$MAX_RETRIES" )); do
    fi
    C=($C+1)
    echo "."
+   if [ "$MAX_RETRIES" == "9999" ]; then
+      break
+   fi
    sleep 1
 done
 
