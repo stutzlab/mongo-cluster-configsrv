@@ -52,9 +52,11 @@ IFS=',' read -r -a NODES <<< "$INIT_CONFIG_NODES"
 S=""
 c=0
 for N in "${NODES[@]}"; do
-    echo "${S}{ _id: $c, host : \"$N:27017\" }" >> /init-configserver.js
-    S=","
-    c=$((c+1))
+   echo "${S}{ _id: $c, host : \"$N:27017\" }" >> /init-configserver.js
+   S=","
+   c=$((c+1))
+   echo "Waiting for host $N to be available..."
+   until ping -c1 $N >/dev/null; do sleep 2; done
 done
 
 cat <<EOT >> /init-configserver.js
