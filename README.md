@@ -13,4 +13,4 @@ This is meant to be used along with [http://github.com/stutzlab/mongo-cluster-ro
 
 ## Volumes
 
-* Mount volumes at "/data/configdb". DON'T map at "/data" because there exists an /data/configdb volume that will be created for the instance if not declared explicitly!
+* Mount volumes at "/data".

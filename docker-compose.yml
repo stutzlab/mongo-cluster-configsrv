@@ -21,8 +21,8 @@ services:
     environment:
       - CONFIG_REPLICA_SET=configsrv-one
 
-  configsrv4:
-    build: .
-    image: stutzlab/mongo-cluster-configsrv
-    environment:
-      - CONFIG_REPLICA_SET=configsrv-one
+  # configsrv4:
+  #   build: .
+  #   image: stutzlab/mongo-cluster-configsrv
+  #   environment:
+  #     - CONFIG_REPLICA_SET=configsrv-one
