@@ -10,6 +10,7 @@ This is meant to be used along with [http://github.com/stutzlab/mongo-cluster-ro
 
 * CONFIG_REPLICA_SET - name of the replica set to be used in configsrv replication. defaults to 'configsrv'
 * CONFIG_SERVER_NODES - command separated list of config servers. ex.: configsrv1,configsrv2,configsrv3. required
+* SHARED_KEY_SECRET - secret name with shared key. defaults to '', which will run with no keyfile
 
 ## Volumes
 
